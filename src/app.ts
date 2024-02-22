@@ -1,27 +1,31 @@
-import express from 'express'
-import mongoose from 'mongoose'
+import express from "express"
+import mongoose from "mongoose"
 import {
-  logErrors,
-  errorHandler,
-  boomErrorHandler
-} from './middlewares/error.handler'
-import routerApi from './routes'
-import { config } from './config/config'
+    logErrors,
+    errorHandler,
+    boomErrorHandler
+} from "./middlewares/error.handler"
+import routerApi from "./routes"
+import { config } from "./config/config"
+import bodyParser from "body-parser"
+// const bodyParser = require("body-parser")
 
 const { mongoUri, port } = config
 
 const app = express()
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 const connectDB = () => {
-  mongoose.connect(mongoUri)
+    mongoose.connect(mongoUri)
 }
 
 app.use(express.json())
 routerApi(app)
 
 app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`)
-  connectDB()
+    console.log(`Server is running at http://localhost:${port}`)
+    connectDB()
 })
 
 app.use(logErrors)
