@@ -1,42 +1,59 @@
 import express from "express"
 import { Task } from "../types/task.type"
 import TaskService from "../services/task.service"
+import passport from "passport"
 
 const router = express.Router()
 const service = new TaskService()
 
-router.post("/", async (req, res) => {
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
     const task: Task = req.body
     const newTask = await service.create(task)
     res.status(200).json(newTask)
-})
+  }
+)
 
-router.get("/", async (req, res, next) => {
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
     try {
-        const tasks = await service.findAll()
-        res.status(200).json(tasks)
+      const tasks = await service.findAll()
+      res.status(200).json(tasks)
     } catch (error) {
-        next(error)
+      next(error)
     }
-})
+  }
+)
 
-router.get("/findIdTask/:id", async (req, res, next) => {
+router.get(
+  "/findIdTask/:id",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
     try {
-        const task = await service.findById(req.params.id)
-        res.status(200).json(task)
+      const task = await service.findById(req.params.id)
+      res.status(200).json(task)
     } catch (error) {
-        next(error)
+      next(error)
     }
-})
+  }
+)
 
-router.get("/findTask", async (req, res, next) => {
+router.get(
+  "/findTask",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
     try {
-        console.log("Estoy aqui " + req.query.name)
-        const task = await service.findByName(req.query.name as string)
-        res.status(200).json(task)
+      console.log("Estoy aqui " + req.query.name)
+      const task = await service.findByName(req.query.name as string)
+      res.status(200).json(task)
     } catch (error) {
-        next(error)
+      next(error)
     }
-})
+  }
+)
 
 export default router

@@ -3,28 +3,27 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   overrides: [
     {
       env: {
         node: true
       },
-      files: ['.eslintrc.{js,cjs}'],
+      files: [".eslintrc.{js,cjs}"],
       parserOptions: {
-        sourceType: 'script'
+        sourceType: "script"
       }
     }
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module'
+    ecmaVersion: "latest",
+    sourceType: "module"
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ["@typescript-eslint", "prettier"],
   rules: {
-    indent: ['error', 4],
-    'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'double'],
-    semi: ['error', 'never']
+    indent: ["error", 2],
+    quotes: ["error", "double"],
+    semi: ["error", "never"]
   }
 }
