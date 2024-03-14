@@ -31,4 +31,21 @@ router.get(
   }
 )
 
+router.get(
+  "/userId",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res, next) => {
+    try {
+      const { email } = req.query
+      const user = await service.findByEmail(email as string)
+      console.log({ user })
+      const id = { id: user._id }
+      console.log(user._id)
+      res.status(200).json({ id })
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
 export default router
